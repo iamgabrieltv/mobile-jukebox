@@ -28,7 +28,7 @@ public class JukeboxCommandExecutor implements CommandExecutor {
   // Initialize the GUI
   Inventory gui = Bukkit.createInventory(player, 18, "Mobile Jukebox");
 
-  // Add all the items to the GUI
+  // Add all the discs to the GUI
   gui.setItem(0, new ItemStack(Material.MUSIC_DISC_13));
   gui.setItem(1, new ItemStack(Material.MUSIC_DISC_CAT));
   gui.setItem(2, new ItemStack(Material.MUSIC_DISC_BLOCKS));
