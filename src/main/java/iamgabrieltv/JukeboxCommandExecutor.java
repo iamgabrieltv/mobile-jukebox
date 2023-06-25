@@ -25,11 +25,28 @@ public class JukeboxCommandExecutor implements CommandExecutor {
  }
 
  private void openJukeboxGUI(Player player) {
+  // Initialize the GUI
   Inventory gui = Bukkit.createInventory(player, 18, "Mobile Jukebox");
 
-  // TODO: Add items to the GUI
+  // Add all the items to the GUI
   gui.setItem(0, new ItemStack(Material.MUSIC_DISC_13));
+  gui.setItem(1, new ItemStack(Material.MUSIC_DISC_CAT));
+  gui.setItem(2, new ItemStack(Material.MUSIC_DISC_BLOCKS));
+  gui.setItem(3, new ItemStack(Material.MUSIC_DISC_CHIRP));
+  gui.setItem(4, new ItemStack(Material.MUSIC_DISC_FAR));
+  gui.setItem(5, new ItemStack(Material.MUSIC_DISC_MALL));
+  gui.setItem(6, new ItemStack(Material.MUSIC_DISC_MELLOHI));
+  gui.setItem(7, new ItemStack(Material.MUSIC_DISC_STAL));
+  gui.setItem(8, new ItemStack(Material.MUSIC_DISC_STRAD));
+  gui.setItem(9, new ItemStack(Material.MUSIC_DISC_WARD));
+  gui.setItem(10, new ItemStack(Material.MUSIC_DISC_11));
+  gui.setItem(11, new ItemStack(Material.MUSIC_DISC_WAIT));
+  gui.setItem(12, new ItemStack(Material.MUSIC_DISC_OTHERSIDE));
+  gui.setItem(13, new ItemStack(Material.MUSIC_DISC_5));
+  gui.setItem(14, new ItemStack(Material.MUSIC_DISC_PIGSTEP));
+  gui.setItem(15, new ItemStack(Material.MUSIC_DISC_RELIC));
 
+  // Open the GUI for the player
   player.openInventory(gui);
  }
 }
