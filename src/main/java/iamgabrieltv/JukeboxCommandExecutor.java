@@ -1,13 +1,20 @@
 package iamgabrieltv;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
 
 public class JukeboxCommandExecutor implements CommandExecutor {
  @Override
@@ -46,7 +53,21 @@ public class JukeboxCommandExecutor implements CommandExecutor {
   gui.setItem(14, new ItemStack(Material.MUSIC_DISC_PIGSTEP));
   gui.setItem(15, new ItemStack(Material.MUSIC_DISC_RELIC));
 
-  // TODO: Add control icons
+  // Initialize stop icon
+  ItemStack stopBanner = new ItemStack(Material.RED_BANNER);
+  BannerMeta stopMeta = (BannerMeta) stopBanner.getItemMeta();
+
+  List<Pattern> patterns = new ArrayList<Pattern>();
+
+  patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+  patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
+  patterns.add(new Pattern(DyeColor.WHITE, PatternType.BORDER));
+  stopMeta.setPatterns(patterns);
+
+  stopBanner.setItemMeta(stopMeta);
+
+  // Add the banner to the GUI
+  gui.setItem(31, stopBanner);
 
   // Open the GUI for the player
   player.openInventory(gui);
