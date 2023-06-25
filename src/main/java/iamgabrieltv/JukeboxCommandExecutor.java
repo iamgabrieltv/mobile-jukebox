@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
@@ -63,6 +64,7 @@ public class JukeboxCommandExecutor implements CommandExecutor {
   patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
   patterns.add(new Pattern(DyeColor.WHITE, PatternType.BORDER));
   stopMeta.setPatterns(patterns);
+  stopMeta.setDisplayName(ChatColor.RED + "Stop");
 
   stopBanner.setItemMeta(stopMeta);
 
