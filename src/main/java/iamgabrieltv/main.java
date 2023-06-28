@@ -26,7 +26,7 @@ public class main extends JavaPlugin {
         }
 
         // Register the /jukebox command
-        getCommand("jukebox").setExecutor(new JukeboxCommandExecutor());
+        getCommand("jukebox").setExecutor(new JukeboxCommandExecutor(playersFile));
 
         getLogger().info("Success!");
 

@@ -1,5 +1,8 @@
 package iamgabrieltv;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +20,18 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
+
 public class JukeboxCommandExecutor implements CommandExecutor {
+ private File playersFile;
+
+ public JukeboxCommandExecutor(File playersFile) {
+  this.playersFile = playersFile;
+ }
+
  @Override
  public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
   if (sender instanceof Player) {
@@ -36,42 +50,31 @@ public class JukeboxCommandExecutor implements CommandExecutor {
   // Initialize the GUI
   Inventory gui = Bukkit.createInventory(player, 36, "Mobile Jukebox");
 
-  // Add all the discs to the GUI
-  gui.setItem(0, new ItemStack(Material.MUSIC_DISC_13));
-  gui.setItem(1, new ItemStack(Material.MUSIC_DISC_CAT));
-  gui.setItem(2, new ItemStack(Material.MUSIC_DISC_BLOCKS));
-  gui.setItem(3, new ItemStack(Material.MUSIC_DISC_CHIRP));
-  gui.setItem(4, new ItemStack(Material.MUSIC_DISC_FAR));
-  gui.setItem(5, new ItemStack(Material.MUSIC_DISC_MALL));
-  gui.setItem(6, new ItemStack(Material.MUSIC_DISC_MELLOHI));
-  gui.setItem(7, new ItemStack(Material.MUSIC_DISC_STAL));
-  gui.setItem(8, new ItemStack(Material.MUSIC_DISC_STRAD));
-  gui.setItem(9, new ItemStack(Material.MUSIC_DISC_WARD));
-  gui.setItem(10, new ItemStack(Material.MUSIC_DISC_11));
-  gui.setItem(11, new ItemStack(Material.MUSIC_DISC_WAIT));
-  gui.setItem(12, new ItemStack(Material.MUSIC_DISC_OTHERSIDE));
-  gui.setItem(13, new ItemStack(Material.MUSIC_DISC_5));
-  gui.setItem(14, new ItemStack(Material.MUSIC_DISC_PIGSTEP));
-  gui.setItem(15, new ItemStack(Material.MUSIC_DISC_RELIC));
+  // Read the playersFile JSON
+  try (JsonReader reader = new JsonReader(new FileReader(playersFile))) {
+   // Parse the JSON file into a JsonElement
+   JsonElement jsonElement = JsonParser.parseReader(reader);
 
-  // Initialize stop icon
-  ItemStack stopBanner = new ItemStack(Material.RED_BANNER);
-  BannerMeta stopMeta = (BannerMeta) stopBanner.getItemMeta();
+   // Get the player's name
+   String playerName = player.getName();
 
-  List<Pattern> patterns = new ArrayList<Pattern>();
+   // Get the player's discs array from the JSON
+   JsonArray playerDiscs = jsonElement.getAsJsonObject().getAsJsonArray(playerName);
 
-  patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-  patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-  patterns.add(new Pattern(DyeColor.WHITE, PatternType.BORDER));
-  stopMeta.setPatterns(patterns);
-  stopMeta.setDisplayName(ChatColor.RED + "Stop");
+   // Add the player's discs to the GUI
+   for (int i = 0; i < playerDiscs.size(); i++) {
+    String disc = playerDiscs.get(i).getAsString();
+    Material material = Material.valueOf(disc);
 
-  stopBanner.setItemMeta(stopMeta);
+    gui.setItem(i, new ItemStack(material));
+   }
 
-  // Add the banner to the GUI
-  gui.setItem(31, stopBanner);
+   // Add other GUI elements (banner, stop icon, etc.)
 
-  // Open the GUI for the player
-  player.openInventory(gui);
+   // Open the GUI for the player
+   player.openInventory(gui);
+  } catch (IOException e) {
+   e.printStackTrace();
+  }
  }
 }
