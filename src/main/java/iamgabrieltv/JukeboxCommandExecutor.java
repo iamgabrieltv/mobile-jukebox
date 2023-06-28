@@ -15,10 +15,13 @@ import org.bukkit.block.banner.PatternType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -65,6 +68,17 @@ public class JukeboxCommandExecutor implements CommandExecutor {
    for (int i = 0; i < playerDiscs.size(); i++) {
     String disc = playerDiscs.get(i).getAsString();
     Material material = Material.valueOf(disc);
+
+    ItemStack discItem = new ItemStack(material);
+    ItemMeta discMeta = discItem.getItemMeta();
+    discMeta.setDisplayName(ChatColor.GREEN + "Play: " + disc); // Set display name for the disc item
+    discItem.setItemMeta(discMeta);
+
+    // Set the click event listener for the disc item
+    discItem.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+    ItemMeta itemMeta = discItem.getItemMeta();
+    itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+    discItem.setItemMeta(itemMeta);
 
     gui.setItem(i, new ItemStack(material));
    }
