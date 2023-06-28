@@ -69,7 +69,22 @@ public class JukeboxCommandExecutor implements CommandExecutor {
     gui.setItem(i, new ItemStack(material));
    }
 
-   // Add other GUI elements (banner, stop icon, etc.)
+   // Initialize stop icon
+   ItemStack stopBanner = new ItemStack(Material.RED_BANNER);
+   BannerMeta stopMeta = (BannerMeta) stopBanner.getItemMeta();
+
+   List<Pattern> patterns = new ArrayList<Pattern>();
+
+   patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+   patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
+   patterns.add(new Pattern(DyeColor.WHITE, PatternType.BORDER));
+   stopMeta.setPatterns(patterns);
+   stopMeta.setDisplayName(ChatColor.RED + "Stop");
+
+   stopBanner.setItemMeta(stopMeta);
+
+   // Add the banner to the GUI
+   gui.setItem(31, stopBanner);
 
    // Open the GUI for the player
    player.openInventory(gui);
