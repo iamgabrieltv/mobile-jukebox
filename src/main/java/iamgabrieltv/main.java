@@ -1,5 +1,6 @@
 package iamgabrieltv;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -27,6 +28,9 @@ public class main extends JavaPlugin {
 
         // Register the /jukebox command
         getCommand("jukebox").setExecutor(new JukeboxCommandExecutor(playersFile));
+
+        // Register the EventListener
+        Bukkit.getPluginManager().registerEvents(new JukeboxListener(playersFile), this);
 
         getLogger().info("Success!");
 

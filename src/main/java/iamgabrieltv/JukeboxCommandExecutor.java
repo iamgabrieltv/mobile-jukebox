@@ -29,7 +29,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 public class JukeboxCommandExecutor implements CommandExecutor {
- private File playersFile;
+ public File playersFile;
 
  public JukeboxCommandExecutor(File playersFile) {
   this.playersFile = playersFile;
@@ -80,7 +80,7 @@ public class JukeboxCommandExecutor implements CommandExecutor {
     itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
     discItem.setItemMeta(itemMeta);
 
-    gui.setItem(i, new ItemStack(material));
+    gui.setItem(i, discItem);
    }
 
    // Initialize stop icon
